@@ -1,0 +1,23 @@
+{
+  "name": "Kaiser Permanente",
+  "type": "Integrated",
+  "parent": null,
+  "revenue": "95B",
+  "subsidiaries": [
+    "Kaiser Foundation Health Plan",
+    "Kaiser Foundation Hospitals",
+    "The Permanente Medical Groups",
+    "Kaiser Permanente Insurance Company",
+    "Kaiser Permanente International"
+  ],
+  "relationships": [
+    {"target": "UnitedHealthcare", "type": "competitor"},
+    {"target": "Elevance Health", "type": "competitor"},
+    {"target": "Humana", "type": "competitor"},
+    {"target": "Cigna", "type": "competitor"},
+    {"target": "CVS Health", "type": "competitor"},
+    {"target": "Kaiser Foundation Hospitals", "type": "owns"},
+    {"target": "Kaiser Foundation Health Plan", "type": "owns"},
+    {"target": "The Permanente Medical Groups", "type": "partner"}
+  ]
+}

@@ -1,0 +1,34 @@
+You are a healthcare industry expert. Based on the following information about {{entity_name}}, please identify:
+
+1. Entity type (Payer, Provider, Vendor, or Integrated)
+2. Parent company (if any)
+3. Subsidiaries (list all that are mentioned)
+4. Annual revenue (with B for billions or M for millions)
+5. Key relationships with other healthcare entities
+
+Information about {{entity_name}}:
+
+SUMMARY:
+{{summary}}
+
+INFOBOX DATA:
+{{infobox}}
+
+ADDITIONAL SECTIONS:
+{{sections}}
+
+Return ONLY a JSON object following this exact schema, with no additional text:
+{
+  "name": "{{entity_name}}",
+  "type": "Entity Type",
+  "parent": "Parent Company Name or null",
+  "revenue": "Revenue with B/M suffix or null",
+  "subsidiaries": ["Subsidiary1", "Subsidiary2"],
+  "relationships": [
+    {"target": "Company Name", "type": "relationship_type"}
+  ]
+}
+
+For relationship types, use: owned_by, owns, partner, competitor, customer, vendor
+
+If you're uncertain about any field, use your knowledge of the healthcare industry to make an educated guess, but mark uncertain fields with an asterisk (*) at the end.

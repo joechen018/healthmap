@@ -1,0 +1,26 @@
+{
+  "name": "Elevance Health",
+  "type": "Payer",
+  "parent": null,
+  "revenue": "156B",
+  "subsidiaries": [
+    "Anthem Blue Cross",
+    "Anthem Blue Cross and Blue Shield",
+    "Blue Cross Blue Shield of Georgia",
+    "Empire Blue Cross Blue Shield",
+    "Carelon",
+    "Carelon Behavioral Health",
+    "Carelon Insights",
+    "Carelon Digital Platforms"
+  ],
+  "relationships": [
+    {"target": "UnitedHealthcare", "type": "competitor"},
+    {"target": "Kaiser Permanente", "type": "competitor"},
+    {"target": "Humana", "type": "competitor"},
+    {"target": "Cigna", "type": "competitor"},
+    {"target": "CVS Health", "type": "competitor"},
+    {"target": "Carelon", "type": "owns"},
+    {"target": "Anthem Blue Cross", "type": "owns"},
+    {"target": "Blue Cross Blue Shield Association", "type": "partner"}
+  ]
+}

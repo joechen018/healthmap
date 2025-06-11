@@ -1,0 +1,18 @@
+You are a healthcare industry expert. Based on the following information about multiple healthcare entities, please infer additional relationships between them that might not be explicitly stated.
+
+Entities:
+{{entities_json}}
+
+For each entity, add or update the "relationships" array with any additional relationships you can infer based on industry knowledge and the data provided.
+
+Return ONLY a JSON array of the updated entities, with no additional text.
+
+For relationship types, use: owned_by, owns, partner, competitor, customer, vendor
+
+Consider the following types of relationships that might exist:
+1. Competitive relationships between entities of the same type (e.g., payers compete with other payers)
+2. Customer/vendor relationships between different types (e.g., providers are customers of vendors)
+3. Ownership relationships based on parent/subsidiary information
+4. Partnership relationships that might exist based on industry knowledge
+
+Be comprehensive but avoid speculating too much. Only add relationships that are likely to exist based on the data provided or common industry knowledge.

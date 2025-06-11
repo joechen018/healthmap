@@ -1,0 +1,20 @@
+{
+  "name": "UnitedHealthcare",
+  "type": "Payer",
+  "parent": "UnitedHealth Group",
+  "revenue": "240B",
+  "subsidiaries": [
+    "UnitedHealthcare Community & State",
+    "UnitedHealthcare Medicare & Retirement",
+    "UnitedHealthcare Employer & Individual"
+  ],
+  "relationships": [
+    {"target": "UnitedHealth Group", "type": "owned_by"},
+    {"target": "Optum", "type": "partner"},
+    {"target": "Elevance Health", "type": "competitor"},
+    {"target": "Kaiser Permanente", "type": "competitor"},
+    {"target": "Humana", "type": "competitor"},
+    {"target": "Cigna", "type": "competitor"},
+    {"target": "CVS Health", "type": "competitor"}
+  ]
+}
