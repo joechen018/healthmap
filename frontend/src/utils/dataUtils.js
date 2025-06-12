@@ -232,8 +232,8 @@ export const getNodeColor = (type) => {
     'Provider': '#34A853',  // Green
     'Vendor': '#FBBC05',    // Yellow
     'Integrated': '#9C27B0', // Purple
-    'Unknown': '#EA4335',   // Red
-    'default': '#EA4335'    // Red
+    'Unknown': 'rgba(180, 180, 180, 0.7)',   // Transparent gray (glassy)
+    'default': 'rgba(180, 180, 180, 0.7)'    // Transparent gray (glassy)
   };
   
   // Case-insensitive matching for more robustness

@@ -75,7 +75,7 @@ healthmap/
 ### 1. Clone the Repo
 
 ```bash
-git clone https://github.com/yourname/healthmap.git
+git clone https://github.com/joechen018/healthmap.git
 cd healthmap
 ```
 

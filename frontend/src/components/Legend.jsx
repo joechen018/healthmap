@@ -7,7 +7,7 @@ const Legend = () => {
     { type: 'Provider', color: '#34A853', description: 'Healthcare providers' },
     { type: 'Vendor', color: '#FBBC05', description: 'Healthcare vendors' },
     { type: 'Integrated', color: '#9C27B0', description: 'Integrated health systems' },
-    { type: 'Unknown', color: '#EA4335', description: 'Unclassified entities' }
+    { type: 'Unknown', color: 'rgba(180, 180, 180, 0.7)', description: 'Unclassified entities' }
   ];
   
   // Relationship type definitions with direct color values

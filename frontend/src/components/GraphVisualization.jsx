@@ -91,7 +91,7 @@ const GraphVisualization = ({ entities, onNodeClick, onResetView }) => {
         } else if (node.type === 'Vendor') {
           nodeColor = '#FBBC05'; // Yellow
         } else {
-          nodeColor = '#EA4335'; // Red (Unknown)
+          nodeColor = 'rgba(180, 180, 180, 0.7)'; // Transparent gray (glassy) for Unknown
         }
         
         // Ensure we're using the correct color for the node
