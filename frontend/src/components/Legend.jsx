@@ -1,16 +1,16 @@
 import React from 'react';
 
 const Legend = () => {
-  // Entity type definitions
+  // Entity type definitions with direct color values
   const entityTypes = [
-    { type: 'Payer', color: 'var(--color-payer)', description: 'Insurance companies' },
-    { type: 'Provider', color: 'var(--color-provider)', description: 'Healthcare providers' },
-    { type: 'Vendor', color: 'var(--color-vendor)', description: 'Healthcare vendors' },
-    { type: 'Integrated', color: 'var(--color-integrated)', description: 'Integrated health systems' },
-    { type: 'Unknown', color: 'var(--color-default)', description: 'Unclassified entities' }
+    { type: 'Payer', color: '#4285F4', description: 'Insurance companies' },
+    { type: 'Provider', color: '#34A853', description: 'Healthcare providers' },
+    { type: 'Vendor', color: '#FBBC05', description: 'Healthcare vendors' },
+    { type: 'Integrated', color: '#9C27B0', description: 'Integrated health systems' },
+    { type: 'Unknown', color: '#EA4335', description: 'Unclassified entities' }
   ];
   
-  // Relationship type definitions
+  // Relationship type definitions with direct color values
   const relationshipTypes = [
     { type: 'owned_by', color: 'rgba(0, 0, 0, 0.5)', description: 'Owned by parent' },
     { type: 'owns', color: 'rgba(0, 0, 0, 0.5)', description: 'Owns subsidiary' },

@@ -26,10 +26,10 @@ const GraphVisualization = ({ entities, onNodeClick, onResetView }) => {
   
   // Expose reset view function to parent
   useEffect(() => {
-    if (onResetView) {
+    if (onResetView && typeof onResetView === 'function') {
       onResetView(handleResetView);
     }
-  }, [onResetView]);
+  }, [onResetView, handleResetView]);
   
   // Auto-zoom to fit when graph data changes
   useEffect(() => {
@@ -62,6 +62,48 @@ const GraphVisualization = ({ entities, onNodeClick, onResetView }) => {
       onEngineStop={() => {
         // Once the simulation has stabilized, zoom to fit
         graphRef.current.zoomToFit(400);
+      }}
+      // Custom node rendering to display entity names
+      nodeCanvasObject={(node, ctx, globalScale) => {
+        // Draw the node circle with the correct color based on entity type
+        const label = node.name;
+        const fontSize = 12/globalScale;
+        const nodeR = Math.sqrt(node.val) * 4;
+        
+        // Ensure we're using the correct color for the node
+        ctx.fillStyle = node.color;
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, nodeR, 0, 2 * Math.PI);
+        ctx.fill();
+        
+        // Draw the text label - always white for consistency
+        ctx.font = `${fontSize}px Sans-Serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = 'white';
+        
+        // For nodes large enough to fit text inside
+        if (nodeR > fontSize * label.length / 3) {
+          // Draw text inside the node
+          ctx.fillText(label, node.x, node.y);
+        } else {
+          // For smaller nodes, draw text with a background matching the node color
+          const textWidth = ctx.measureText(label).width;
+          const bgPadding = 2;
+          
+          // Draw text background using the same color as the node
+          ctx.fillStyle = node.color;
+          ctx.fillRect(
+            node.x + nodeR + fontSize/2 - textWidth/2 - bgPadding,
+            node.y - fontSize/2 - bgPadding,
+            textWidth + bgPadding * 2,
+            fontSize + bgPadding * 2
+          );
+          
+          // Draw white text on the colored background
+          ctx.fillStyle = 'white';
+          ctx.fillText(label, node.x + nodeR + fontSize/2, node.y);
+        }
       }}
     />
   );

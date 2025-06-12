@@ -9,15 +9,85 @@
 export const loadAllEntities = async () => {
   try {
     // In a production environment, this would be an API call
-    // For now, we'll use static imports
+    // For now, we'll use mock data
     
-    // Import the entity data files
-    const unitedHealthcare = await import('../../data/entities/unitedhealthcare.json');
-    const elevanceHealth = await import('../../data/entities/elevance_health.json');
-    const kaiserPermanente = await import('../../data/entities/kaiser_permanente.json');
+    // Mock data for demonstration purposes
+    const mockEntities = [
+      {
+        "name": "UnitedHealthcare",
+        "type": "Payer",
+        "parent": "UnitedHealth Group",
+        "revenue": "240B",
+        "subsidiaries": [
+          "UnitedHealthcare Community & State",
+          "UnitedHealthcare Medicare & Retirement",
+          "UnitedHealthcare Employer & Individual"
+        ],
+        "relationships": [
+          {"target": "UnitedHealth Group", "type": "owned_by"},
+          {"target": "Optum", "type": "partner"},
+          {"target": "Elevance Health", "type": "competitor"},
+          {"target": "Kaiser Permanente", "type": "competitor"},
+          {"target": "Humana", "type": "competitor"},
+          {"target": "Cigna", "type": "competitor"},
+          {"target": "CVS Health", "type": "competitor"}
+        ]
+      },
+      {
+        "name": "Elevance Health",
+        "type": "Payer",
+        "parent": null,
+        "revenue": "156B",
+        "subsidiaries": [
+          "Anthem Blue Cross",
+          "Anthem Blue Cross and Blue Shield",
+          "Blue Cross Blue Shield of Georgia",
+          "Empire Blue Cross Blue Shield",
+          "Carelon",
+          "Carelon Behavioral Health",
+          "Carelon Insights",
+          "Carelon Digital Platforms"
+        ],
+        "relationships": [
+          {"target": "UnitedHealthcare", "type": "competitor"},
+          {"target": "Kaiser Permanente", "type": "competitor"},
+          {"target": "Humana", "type": "competitor"},
+          {"target": "Cigna", "type": "competitor"},
+          {"target": "CVS Health", "type": "competitor"},
+          {"target": "Carelon", "type": "owns"},
+          {"target": "Anthem Blue Cross", "type": "owns"},
+          {"target": "Blue Cross Blue Shield Association", "type": "partner"}
+        ]
+      },
+      {
+        "name": "Kaiser Permanente",
+        "type": "Integrated",
+        "parent": null,
+        "revenue": "95B",
+        "subsidiaries": [
+          "Kaiser Foundation Health Plan",
+          "Kaiser Foundation Hospitals",
+          "The Permanente Medical Groups",
+          "Kaiser Permanente Insurance Company",
+          "Kaiser Permanente International"
+        ],
+        "relationships": [
+          {"target": "UnitedHealthcare", "type": "competitor"},
+          {"target": "Elevance Health", "type": "competitor"},
+          {"target": "Humana", "type": "competitor"},
+          {"target": "Cigna", "type": "competitor"},
+          {"target": "CVS Health", "type": "competitor"},
+          {"target": "Kaiser Foundation Hospitals", "type": "owns"},
+          {"target": "Kaiser Foundation Health Plan", "type": "owns"},
+          {"target": "The Permanente Medical Groups", "type": "partner"}
+        ]
+      }
+    ];
     
-    // Combine the entities
-    return [unitedHealthcare.default, elevanceHealth.default, kaiserPermanente.default];
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    return mockEntities;
   } catch (error) {
     console.error('Error loading entity data:', error);
     throw new Error('Failed to load healthcare entity data');
@@ -69,7 +139,7 @@ export const transformToGraphData = (entities) => {
           id: subsidiary,
           name: subsidiary,
           type: 'Unknown', // We don't know the type of subsidiaries
-          val: 5, // Default size
+          val: 8, // Updated default size
           color: getNodeColor('Unknown')
         };
         
@@ -88,7 +158,7 @@ export const transformToGraphData = (entities) => {
           id: rel.target,
           name: rel.target,
           type: 'Unknown', // We don't know the type of relationship targets
-          val: 5, // Default size
+          val: 8, // Updated default size
           color: getNodeColor('Unknown')
         };
         
@@ -145,15 +215,16 @@ export const transformToGraphData = (entities) => {
 /**
  * Get node color based on entity type
  * @param {string} type Entity type
- * @returns {string} CSS color variable
+ * @returns {string} Color value
  */
 export const getNodeColor = (type) => {
   const typeColors = {
-    'Payer': 'var(--color-payer)',
-    'Provider': 'var(--color-provider)',
-    'Vendor': 'var(--color-vendor)',
-    'Integrated': 'var(--color-integrated)',
-    'default': 'var(--color-default)'
+    'Payer': '#4285F4',     // Blue
+    'Provider': '#34A853',  // Green
+    'Vendor': '#FBBC05',    // Yellow
+    'Integrated': '#9C27B0', // Purple
+    'Unknown': '#EA4335',   // Red
+    'default': '#EA4335'    // Red
   };
   return typeColors[type] || typeColors.default;
 };
@@ -164,34 +235,35 @@ export const getNodeColor = (type) => {
  * @returns {number} Node size value
  */
 export const getNodeSize = (revenue) => {
-  if (!revenue) return 5;
+  if (!revenue) return 8;  // Increased minimum size
   
   // Extract numeric value from revenue string (e.g., "226B" -> 226)
   const match = revenue.match(/(\d+(\.\d+)?)/);
-  if (!match) return 5;
+  if (!match) return 8;  // Increased minimum size
   
   const value = parseFloat(match[1]);
   const suffix = revenue.includes('B') ? 'B' : revenue.includes('M') ? 'M' : '';
   
   // Scale based on B (billions) or M (millions)
-  const multiplier = suffix === 'B' ? 1 : suffix === 'M' ? 0.1 : 0.01;
-  return Math.max(5, Math.min(20, value * multiplier));
+  // Increased multiplier to make nodes larger
+  const multiplier = suffix === 'B' ? 1.5 : suffix === 'M' ? 0.2 : 0.05;
+  return Math.max(8, Math.min(25, value * multiplier));  // Increased min and max sizes
 };
 
 /**
  * Get link color based on relationship type
  * @param {Object} link Link object with type property
- * @returns {string} CSS color
+ * @returns {string} Color value
  */
 export const getLinkColor = (link) => {
   const typeColors = {
-    'owned_by': 'rgba(0, 0, 0, 0.5)',
-    'owns': 'rgba(0, 0, 0, 0.5)',
-    'partner': 'rgba(0, 102, 204, 0.5)',
-    'competitor': 'rgba(220, 53, 69, 0.3)',
-    'customer': 'rgba(40, 167, 69, 0.5)',
-    'vendor': 'rgba(255, 193, 7, 0.5)',
-    'default': 'rgba(108, 117, 125, 0.3)'
+    'owned_by': 'rgba(0, 0, 0, 0.5)',      // Black (semi-transparent)
+    'owns': 'rgba(0, 0, 0, 0.5)',          // Black (semi-transparent)
+    'partner': 'rgba(0, 102, 204, 0.5)',   // Blue (semi-transparent)
+    'competitor': 'rgba(220, 53, 69, 0.3)', // Red (semi-transparent)
+    'customer': 'rgba(40, 167, 69, 0.5)',  // Green (semi-transparent)
+    'vendor': 'rgba(255, 193, 7, 0.5)',    // Yellow (semi-transparent)
+    'default': 'rgba(108, 117, 125, 0.3)'  // Gray (semi-transparent)
   };
   return typeColors[link.type] || typeColors.default;
 };

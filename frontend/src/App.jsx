@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import GraphVisualization from './components/GraphVisualization';
 import EntityDetailsPanel from './components/EntityDetailsPanel';
 import Header from './components/Header';
@@ -47,10 +47,14 @@ const App = () => {
     setSelectedEntity(null);
   };
 
-  const handleResetView = () => {
-    // This will be implemented in the GraphVisualization component
-    // We'll pass this function down as a prop
-  };
+  // Reference to the reset view function from GraphVisualization
+  const [resetViewFn, setResetViewFn] = useState(null);
+  
+  const handleResetView = useCallback(() => {
+    if (resetViewFn) {
+      resetViewFn();
+    }
+  }, [resetViewFn]);
 
   return (
     <div className="app">
@@ -67,10 +71,10 @@ const App = () => {
               <GraphVisualization 
                 entities={entities} 
                 onNodeClick={handleNodeClick} 
-                onResetView={handleResetView}
+                onResetView={setResetViewFn}
               />
               <Legend />
-              <Controls onResetView={handleResetView} />
+              <Controls onResetView={() => handleResetView()} />
             </>
           )}
         </div>
