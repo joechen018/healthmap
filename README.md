@@ -79,6 +79,16 @@ git clone https://github.com/joechen018/healthmap.git
 cd healthmap
 ```
 
+### Hosted Version
+
+You can also access the hosted version of HealthMap on GitHub Pages:
+
+```
+https://joechen018.github.io/healthmap/
+```
+
+This version includes pre-processed healthcare entity data and is updated automatically when changes are pushed to the main branch.
+
 ### 2. Set Up Python Backend
 
 ```bash
@@ -127,6 +137,28 @@ npm run dev
 ```
 
 Then open `http://localhost:3000` in your browser.
+
+---
+
+## 🚀 Deployment
+
+### GitHub Pages
+
+HealthMap is configured for automatic deployment to GitHub Pages:
+
+1. Fork this repository
+2. Enable GitHub Pages in your repository settings:
+   - Go to Settings > Pages
+   - Set the source to "GitHub Actions"
+3. Push changes to the main branch to trigger deployment
+4. Your site will be available at `https://yourusername.github.io/healthmap/`
+
+The deployment workflow:
+- Builds the React frontend
+- Copies the entity data files to the build
+- Deploys to the gh-pages branch
+
+You can also manually trigger a deployment from the Actions tab in your repository.
 
 ---
 

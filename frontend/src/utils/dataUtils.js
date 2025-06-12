@@ -27,7 +27,9 @@ export const loadAllEntities = async () => {
     
     // First, check if we can access the data directory
     try {
-      const testResponse = await fetch('/data/entities/');
+      // Use the correct base path for GitHub Pages
+      const basePath = import.meta.env.BASE_URL || '/';
+      const testResponse = await fetch(`${basePath}data/entities/`);
       console.log("Data directory access test:", testResponse.status, testResponse.statusText);
     } catch (err) {
       console.error("Error accessing data directory:", err);
@@ -36,8 +38,11 @@ export const loadAllEntities = async () => {
     // Load each entity file
     const entitiesPromises = entityFiles.map(async (filename) => {
       try {
-        console.log(`Attempting to load: /data/entities/${filename}`);
-        const response = await fetch(`/data/entities/${filename}`);
+        // Use the correct base path for GitHub Pages
+        const basePath = import.meta.env.BASE_URL || '/';
+        const dataPath = `${basePath}data/entities/${filename}`;
+        console.log(`Attempting to load: ${dataPath}`);
+        const response = await fetch(dataPath);
         
         if (!response.ok) {
           console.warn(`Failed to load entity file: ${filename}`, response.status, response.statusText);

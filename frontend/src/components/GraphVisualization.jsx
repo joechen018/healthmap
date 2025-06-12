@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ForceGraph2D from 'react-force-graph-2d';
+import { forceRadial, forceLink } from 'd3-force';
 import { useWindowSize } from '../hooks/useWindowSize';
 import { transformToGraphData, getNodeColor, getNodeSize, getLinkColor } from '../utils/dataUtils';
 
@@ -66,6 +67,43 @@ const GraphVisualization = ({ entities, onNodeClick, onResetView }) => {
       height={windowSize.height - 60} // Subtract header height
       onNodeClick={(node) => onNodeClick && onNodeClick(node)}
       cooldownTicks={100}
+      // Simpler approach with stronger center force
+      d3AlphaDecay={0.05} // Default value
+      d3VelocityDecay={0.4} // Default value
+      // Use a stronger center force
+      d3Force={(engine) => {
+        // Increase the center force strength
+        engine.force('center').strength(1);
+        
+        // Reduce the charge force (less repulsion)
+        engine.force('charge').strength(-30);
+        
+        // Set fixed positions for major entities in a circle around the center
+        const majorEntities = ['UnitedHealthcare', 'Elevance Health', 'Kaiser Permanente', 
+                              'Humana', 'Cigna', 'CVS Health', 'Aetna', 'Centene'];
+        
+        const radius = 150; // Distance from center
+        const nodes = engine.nodes();
+        
+        // Position major entities in a circle
+        nodes.forEach(node => {
+          const index = majorEntities.indexOf(node.id);
+          if (index !== -1) {
+            // Calculate position in a circle
+            const angle = (index / majorEntities.length) * 2 * Math.PI;
+            const fx = radius * Math.cos(angle);
+            const fy = radius * Math.sin(angle);
+            
+            // Set fixed position
+            node.fx = fx;
+            node.fy = fy;
+          } else {
+            // Clear any fixed position for non-major entities
+            node.fx = null;
+            node.fy = null;
+          }
+        });
+      }}
       onEngineStop={() => {
         // Once the simulation has stabilized, zoom to fit
         graphRef.current.zoomToFit(400);
