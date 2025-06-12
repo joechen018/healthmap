@@ -25,8 +25,7 @@ jobs:
       - name: Copy data files
         run: |
           mkdir -p frontend/public/data
-          rm -rf frontend/public/data/entities
-          cp -r data/entities frontend/public/data/entities
+          rsync -a --ignore-existing data/entities/ frontend/public/data/entities/
 
       - name: Build
         run: cd frontend && npm run build
