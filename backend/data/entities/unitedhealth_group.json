@@ -1,0 +1,48 @@
+{
+  "name": "UnitedHealth Group",
+  "type": "Integrated",
+  "parent": null,
+  "revenue": "400.3B",
+  "subsidiaries": [
+    "Optum",
+    "UnitedHealthcare",
+    "OptumHealth Bank",
+    "OptumRx",
+    "Ingenix*",
+    "The Lewin Group*"
+  ],
+  "relationships": [
+    {
+      "target": "Humana",
+      "type": "competitor"
+    },
+    {
+      "target": "Anthem Inc",
+      "type": "competitor"
+    },
+    {
+      "target": "CVS Health",
+      "type": "competitor"
+    },
+    {
+      "target": "Aetna",
+      "type": "competitor"
+    },
+    {
+      "target": "Cigna",
+      "type": "competitor"
+    },
+    {
+      "target": "DaVita Inc.",
+      "type": "vendor"
+    },
+    {
+      "target": "Change Healthcare",
+      "type": "owns"
+    },
+    {
+      "target": "LHC Group",
+      "type": "owns*"
+    }
+  ]
+}

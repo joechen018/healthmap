@@ -19,7 +19,7 @@ load_dotenv()
 
 # Constants
 CLAUDE_API_KEY = os.getenv('CLAUDE_API_KEY')
-CLAUDE_MODEL = "claude-3-7-sonnet-20240229"  # Use the latest available model
+CLAUDE_MODEL = "claude-3-opus-20240229"  # Updated to a different model
 
 def enrich_entity_data(entity_name, scraped_data):
     """
@@ -39,6 +39,13 @@ def enrich_entity_data(entity_name, scraped_data):
     logger.info(f"Enriching data for {entity_name} using Claude API")
     
     try:
+        # Remove any proxy settings from environment variables to avoid issues
+        os.environ.pop('HTTP_PROXY', None)
+        os.environ.pop('HTTPS_PROXY', None)
+        os.environ.pop('http_proxy', None)
+        os.environ.pop('https_proxy', None)
+        
+        # Initialize the Anthropic client without proxies
         client = anthropic.Anthropic(api_key=CLAUDE_API_KEY)
         
         # Prepare the data for the prompt
@@ -152,6 +159,13 @@ def infer_relationships(entities):
     logger.info(f"Inferring relationships between {len(entities)} entities")
     
     try:
+        # Remove any proxy settings from environment variables to avoid issues
+        os.environ.pop('HTTP_PROXY', None)
+        os.environ.pop('HTTPS_PROXY', None)
+        os.environ.pop('http_proxy', None)
+        os.environ.pop('https_proxy', None)
+        
+        # Initialize the Anthropic client without proxies
         client = anthropic.Anthropic(api_key=CLAUDE_API_KEY)
         
         # Format the entities data
