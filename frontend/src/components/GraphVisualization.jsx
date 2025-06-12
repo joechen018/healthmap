@@ -12,8 +12,15 @@ const GraphVisualization = ({ entities, onNodeClick, onResetView }) => {
   useEffect(() => {
     if (!entities || entities.length === 0) return;
     
+    // Debug log to verify entities received by GraphVisualization
+    console.log("Entities received by GraphVisualization:", entities);
+    entities.forEach(entity => {
+      console.log(`GraphVisualization entity: ${entity.name}, Type: ${entity.type}`);
+    });
+    
     // Use our utility function to transform entities into graph data
     const data = transformToGraphData(entities);
+    console.log("Transformed graph data:", data);
     setGraphData(data);
   }, [entities]);
   
@@ -70,8 +77,25 @@ const GraphVisualization = ({ entities, onNodeClick, onResetView }) => {
         const fontSize = 12/globalScale;
         const nodeR = Math.sqrt(node.val) * 4;
         
+        // Debug log to verify node properties
+        console.log(`Rendering node: ${node.name}, Type: ${node.type}, Color: ${node.color}`);
+        
+        // Force color based on type for debugging
+        let nodeColor = node.color;
+        if (node.type === 'Payer') {
+          nodeColor = '#4285F4'; // Blue
+        } else if (node.type === 'Integrated') {
+          nodeColor = '#9C27B0'; // Purple
+        } else if (node.type === 'Provider') {
+          nodeColor = '#34A853'; // Green
+        } else if (node.type === 'Vendor') {
+          nodeColor = '#FBBC05'; // Yellow
+        } else {
+          nodeColor = '#EA4335'; // Red (Unknown)
+        }
+        
         // Ensure we're using the correct color for the node
-        ctx.fillStyle = node.color;
+        ctx.fillStyle = nodeColor;
         ctx.beginPath();
         ctx.arc(node.x, node.y, nodeR, 0, 2 * Math.PI);
         ctx.fill();
@@ -92,7 +116,7 @@ const GraphVisualization = ({ entities, onNodeClick, onResetView }) => {
           const bgPadding = 2;
           
           // Draw text background using the same color as the node
-          ctx.fillStyle = node.color;
+          ctx.fillStyle = nodeColor; // Use the forced nodeColor
           ctx.fillRect(
             node.x + nodeR + fontSize/2 - textWidth/2 - bgPadding,
             node.y - fontSize/2 - bgPadding,
