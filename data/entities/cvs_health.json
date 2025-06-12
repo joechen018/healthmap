@@ -1,0 +1,30 @@
+{
+  "name": "CVS Health",
+  "type": "Integrated",
+  "parent": null,
+  "revenue": "372.8B",
+  "subsidiaries": [
+    "CVS Pharmacy",
+    "MinuteClinic",
+    "CVS Caremark",
+    "Longs Drugs",
+    "Navarro Discount Pharmacies",
+    "Omnicare",
+    "Aetna",
+    "Oak Street Health"
+  ],
+  "relationships": [
+    {
+      "target": "Aetna",
+      "type": "owns"
+    },
+    {
+      "target": "Signify Health",
+      "type": "owns*"
+    },
+    {
+      "target": "Microsoft",
+      "type": "partner"
+    }
+  ]
+}

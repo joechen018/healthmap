@@ -1,0 +1,37 @@
+{
+  "name": "Centene",
+  "type": "Payer",
+  "parent": null,
+  "revenue": "163B",
+  "subsidiaries": [
+    "Health Net",
+    "Trillium Community Health Plan",
+    "Fidelis Care",
+    "WellCare",
+    "Magellan Health",
+    "Circle Health*",
+    "Operose Health",
+    "Magellan Rx",
+    "PANTHERx Rare",
+    "Superior HealthPlan",
+    "Envolve"
+  ],
+  "relationships": [
+    {
+      "target": "Community Health Centers Network LP",
+      "type": "partner"
+    },
+    {
+      "target": "MHM Services",
+      "type": "owns"
+    },
+    {
+      "target": "US Script",
+      "type": "owns"
+    },
+    {
+      "target": "Centurion",
+      "type": "owns"
+    }
+  ]
+}

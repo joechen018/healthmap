@@ -1,0 +1,50 @@
+{
+  "name": "Cigna",
+  "type": "Payer",
+  "parent": null,
+  "revenue": "247.1B",
+  "subsidiaries": [
+    "Express Scripts",
+    "Accredo",
+    "eviCore",
+    "CareAllies"
+  ],
+  "relationships": [
+    {
+      "target": "Lincoln National Corporation",
+      "type": "vendor"
+    },
+    {
+      "target": "HealthSpring Inc.",
+      "type": "owns"
+    },
+    {
+      "target": "Anthem Inc.",
+      "type": "competitor"
+    },
+    {
+      "target": "Priority Health",
+      "type": "partner"
+    },
+    {
+      "target": "Envision Healthcare",
+      "type": "customer"
+    },
+    {
+      "target": "Molina Healthcare",
+      "type": "vendor"
+    },
+    {
+      "target": "Health Care Service Corporation",
+      "type": "customer"
+    },
+    {
+      "target": "Humana",
+      "type": "partner"
+    },
+    {
+      "target": "TTK Group",
+      "type": "partner"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "name": "UnitedHealthcare",
+  "type": "Payer",
+  "parent": "UnitedHealth Group",
+  "revenue": null,
+  "subsidiaries": [
+    "Optum",
+    "UnitedHealthcare"
+  ],
+  "relationships": [
+    {
+      "target": "Optum",
+      "type": "owned_by"
+    },
+    {
+      "target": "Change Healthcare",
+      "type": "owns"
+    },
+    {
+      "target": "DaVita Medical Group",
+      "type": "owns"
+    },
+    {
+      "target": "Equian",
+      "type": "owns"
+    },
+    {
+      "target": "PatientsLikeMe",
+      "type": "owns"
+    },
+    {
+      "target": "LHC Group",
+      "type": "owns*"
+    },
+    {
+      "target": "Rally Health",
+      "type": "owns"
+    },
+    {
+      "target": "Audax Health",
+      "type": "owns"
+    }
+  ]
+}

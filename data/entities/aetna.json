@@ -1,0 +1,19 @@
+{
+  "name": "Aetna",
+  "type": "Payer",
+  "parent": "CVS Health",
+  "revenue": "60.6B",
+  "subsidiaries": [
+    "Aetna Better Health",
+    "Active Health Management",
+    "Aetna International",
+    "First Health PPO Network",
+    "Meritain Health"
+  ],
+  "relationships": [
+    {
+      "target": "CVS Health",
+      "type": "owned_by"
+    }
+  ]
+}
