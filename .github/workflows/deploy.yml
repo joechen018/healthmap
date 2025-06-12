@@ -25,7 +25,9 @@ jobs:
       - name: Copy data files
         run: |
           mkdir -p frontend/public/data
-          cp -r data/entities frontend/public/data/
+          # Copy individual files instead of directories to avoid symbolic link issues
+          mkdir -p frontend/public/data/entities
+          cp data/entities/*.json frontend/public/data/entities/
 
       - name: Build
         run: cd frontend && npm run build
