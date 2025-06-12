@@ -102,7 +102,7 @@ def enrich_entity_data(entity_name, scraped_data):
             model=CLAUDE_MODEL,
             max_tokens=2000,
             temperature=0.2,
-            system="You are a healthcare industry expert who extracts structured information about healthcare companies and returns it in valid JSON format only.",
+            system="You are a healthcare industry expert who extracts structured information about healthcare companies. IMPORTANT: Return ONLY the raw JSON object with no additional text, explanations, or markdown formatting.",
             messages=[
                 {"role": "user", "content": prompt}
             ]
@@ -117,7 +117,28 @@ def enrich_entity_data(entity_name, scraped_data):
         elif "```" in response_text:
             json_text = response_text.split("```")[1].strip()
         else:
-            json_text = response_text.strip()
+            # If Claude returns text before the JSON, try to extract just the JSON part
+            # Look for the first occurrence of '{'
+            if '{' in response_text:
+                start_idx = response_text.find('{')
+                # Find the matching closing brace
+                brace_count = 0
+                end_idx = -1
+                for i in range(start_idx, len(response_text)):
+                    if response_text[i] == '{':
+                        brace_count += 1
+                    elif response_text[i] == '}':
+                        brace_count -= 1
+                        if brace_count == 0:
+                            end_idx = i + 1
+                            break
+                
+                if end_idx > start_idx:
+                    json_text = response_text[start_idx:end_idx].strip()
+                else:
+                    json_text = response_text.strip()
+            else:
+                json_text = response_text.strip()
         
         # Parse the JSON
         enriched_data = json.loads(json_text)
@@ -190,7 +211,7 @@ def infer_relationships(entities):
             model=CLAUDE_MODEL,
             max_tokens=4000,
             temperature=0.2,
-            system="You are a healthcare industry expert who infers relationships between healthcare companies and returns the updated data in valid JSON format only.",
+            system="You are a healthcare industry expert who infers relationships between healthcare companies. IMPORTANT: Return ONLY the raw JSON array with no additional text, explanations, or markdown formatting.",
             messages=[
                 {"role": "user", "content": prompt}
             ]
@@ -205,7 +226,28 @@ def infer_relationships(entities):
         elif "```" in response_text:
             json_text = response_text.split("```")[1].strip()
         else:
-            json_text = response_text.strip()
+            # If Claude returns text before the JSON, try to extract just the JSON part
+            # Look for the first occurrence of '['
+            if '[' in response_text:
+                start_idx = response_text.find('[')
+                # Find the matching closing bracket
+                bracket_count = 0
+                end_idx = -1
+                for i in range(start_idx, len(response_text)):
+                    if response_text[i] == '[':
+                        bracket_count += 1
+                    elif response_text[i] == ']':
+                        bracket_count -= 1
+                        if bracket_count == 0:
+                            end_idx = i + 1
+                            break
+                
+                if end_idx > start_idx:
+                    json_text = response_text[start_idx:end_idx].strip()
+                else:
+                    json_text = response_text.strip()
+            else:
+                json_text = response_text.strip()
         
         # Parse the JSON
         updated_entities = json.loads(json_text)

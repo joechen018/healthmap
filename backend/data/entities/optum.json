@@ -1,0 +1,34 @@
+{
+  "name": "Optum",
+  "type": "Integrated",
+  "parent": "UnitedHealth Group",
+  "revenue": "253B",
+  "subsidiaries": [
+    "OptumRx",
+    "OptumHealth",
+    "OptumInsight",
+    "Optum Serve"
+  ],
+  "relationships": [
+    {
+      "target": "Haven",
+      "type": "competitor"
+    },
+    {
+      "target": "CVS-Aetna",
+      "type": "competitor"
+    },
+    {
+      "target": "Cigna-Express Scripts",
+      "type": "competitor"
+    },
+    {
+      "target": "Humana-Kindred",
+      "type": "competitor"
+    },
+    {
+      "target": "U.S. government agencies",
+      "type": "customer*"
+    }
+  ]
+}

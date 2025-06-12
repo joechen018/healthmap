@@ -1,0 +1,45 @@
+{
+  "name": "Humana",
+  "type": "Payer",
+  "parent": null,
+  "revenue": "118B",
+  "subsidiaries": [
+    "Humana Military Healthcare Services",
+    "Concentra Inc.*",
+    "Kindred at Home*"
+  ],
+  "relationships": [
+    {
+      "target": "Virgin Group",
+      "type": "partner"
+    },
+    {
+      "target": "Centers for Disease Control and Prevention",
+      "type": "partner"
+    },
+    {
+      "target": "Kindred Healthcare",
+      "type": "owns"
+    },
+    {
+      "target": "Enclara Healthcare",
+      "type": "owns"
+    },
+    {
+      "target": "Clayton, Dubilier & Rice",
+      "type": "partner"
+    },
+    {
+      "target": "United Healthcare",
+      "type": "competitor"
+    },
+    {
+      "target": "Aetna",
+      "type": "competitor"
+    },
+    {
+      "target": "Department of Defense",
+      "type": "customer"
+    }
+  ]
+}

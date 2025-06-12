@@ -8,93 +8,69 @@
  */
 export const loadAllEntities = async () => {
   try {
-    // In a production environment, this would be an API call
-    // For now, we'll use mock data
+    console.log("Loading entities from data/entities directory...");
     
-    console.log("Loading mock entities...");
-    
-    // Mock data for demonstration purposes
-    const mockEntities = [
-      {
-        "name": "UnitedHealthcare",
-        "type": "Payer", // Blue
-        "parent": "UnitedHealth Group",
-        "revenue": "240B",
-        "subsidiaries": [
-          "UnitedHealthcare Community & State",
-          "UnitedHealthcare Medicare & Retirement",
-          "UnitedHealthcare Employer & Individual"
-        ],
-        "relationships": [
-          {"target": "UnitedHealth Group", "type": "owned_by"},
-          {"target": "Optum", "type": "partner"},
-          {"target": "Elevance Health", "type": "competitor"},
-          {"target": "Kaiser Permanente", "type": "competitor"},
-          {"target": "Humana", "type": "competitor"},
-          {"target": "Cigna", "type": "competitor"},
-          {"target": "CVS Health", "type": "competitor"}
-        ]
-      },
-      {
-        "name": "Elevance Health",
-        "type": "Payer", // Blue
-        "parent": null,
-        "revenue": "156B",
-        "subsidiaries": [
-          "Anthem Blue Cross",
-          "Anthem Blue Cross and Blue Shield",
-          "Blue Cross Blue Shield of Georgia",
-          "Empire Blue Cross Blue Shield",
-          "Carelon",
-          "Carelon Behavioral Health",
-          "Carelon Insights",
-          "Carelon Digital Platforms"
-        ],
-        "relationships": [
-          {"target": "UnitedHealthcare", "type": "competitor"},
-          {"target": "Kaiser Permanente", "type": "competitor"},
-          {"target": "Humana", "type": "competitor"},
-          {"target": "Cigna", "type": "competitor"},
-          {"target": "CVS Health", "type": "competitor"},
-          {"target": "Carelon", "type": "owns"},
-          {"target": "Anthem Blue Cross", "type": "owns"},
-          {"target": "Blue Cross Blue Shield Association", "type": "partner"}
-        ]
-      },
-      {
-        "name": "Kaiser Permanente",
-        "type": "Integrated", // Purple
-        "parent": null,
-        "revenue": "95B",
-        "subsidiaries": [
-          "Kaiser Foundation Health Plan",
-          "Kaiser Foundation Hospitals",
-          "The Permanente Medical Groups",
-          "Kaiser Permanente Insurance Company",
-          "Kaiser Permanente International"
-        ],
-        "relationships": [
-          {"target": "UnitedHealthcare", "type": "competitor"},
-          {"target": "Elevance Health", "type": "competitor"},
-          {"target": "Humana", "type": "competitor"},
-          {"target": "Cigna", "type": "competitor"},
-          {"target": "CVS Health", "type": "competitor"},
-          {"target": "Kaiser Foundation Hospitals", "type": "owns"},
-          {"target": "Kaiser Foundation Health Plan", "type": "owns"},
-          {"target": "The Permanente Medical Groups", "type": "partner"}
-        ]
-      }
+    // List of entity files to load - now includes all the new entities
+    const entityFiles = [
+      'unitedhealth_group.json',
+      'unitedhealthcare.json',
+      'elevance_health.json',
+      'kaiser_permanente.json',
+      'aetna.json',
+      'anthem.json',
+      'centene.json',
+      'cigna.json',
+      'cvs_health.json',
+      'humana.json',
+      'molina_healthcare.json'
     ];
     
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 500));
+    // First, check if we can access the data directory
+    try {
+      const testResponse = await fetch('/data/entities/');
+      console.log("Data directory access test:", testResponse.status, testResponse.statusText);
+    } catch (err) {
+      console.error("Error accessing data directory:", err);
+    }
     
-    // Debug log to verify entity types before returning
-    mockEntities.forEach(entity => {
+    // Load each entity file
+    const entitiesPromises = entityFiles.map(async (filename) => {
+      try {
+        console.log(`Attempting to load: /data/entities/${filename}`);
+        const response = await fetch(`/data/entities/${filename}`);
+        
+        if (!response.ok) {
+          console.warn(`Failed to load entity file: ${filename}`, response.status, response.statusText);
+          return null;
+        }
+        
+        const data = await response.json();
+        console.log(`Successfully loaded ${filename}:`, data);
+        return data;
+      } catch (err) {
+        console.warn(`Error loading entity file ${filename}:`, err);
+        return null;
+      }
+    });
+    
+    // Wait for all files to load
+    const loadedEntities = await Promise.all(entitiesPromises);
+    
+    // Filter out any null values (failed loads)
+    const entities = loadedEntities.filter(entity => entity !== null);
+    
+    console.log(`Successfully loaded ${entities.length} of ${entityFiles.length} entity files`);
+    
+    if (entities.length === 0) {
+      throw new Error('No entity data could be loaded. Check if the data directory is accessible.');
+    }
+    
+    // Debug log to verify entity types
+    entities.forEach(entity => {
       console.log(`Loaded entity: ${entity.name}, Type: ${entity.type}`);
     });
     
-    return mockEntities;
+    return entities;
   } catch (error) {
     console.error('Error loading entity data:', error);
     throw new Error('Failed to load healthcare entity data');

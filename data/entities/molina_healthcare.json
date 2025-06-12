@@ -1,0 +1,19 @@
+{
+  "name": "Molina Healthcare",
+  "type": "Payer",
+  "parent": null,
+  "revenue": "40.7B",
+  "subsidiaries": [
+    "Molina Medicaid Solutions*"
+  ],
+  "relationships": [
+    {
+      "target": "Affinity Health Plan",
+      "type": "owns*"
+    },
+    {
+      "target": "DXC Technology",
+      "type": "vendor"
+    }
+  ]
+}

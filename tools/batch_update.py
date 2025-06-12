@@ -41,12 +41,13 @@ def process_entity_wrapper(entity_name, update_existing=True):
     except Exception as e:
         return (entity_name, False, str(e))
 
-def batch_process(input_file=None, entity_list=None, update_existing=True, max_workers=4):
+def batch_process(input_file=None, text_file=None, entity_list=None, update_existing=True, max_workers=4):
     """
     Process multiple healthcare entities in batch
     
     Args:
         input_file (str, optional): Path to CSV file with entity names
+        text_file (str, optional): Path to text file with newline-separated entity names
         entity_list (list, optional): List of entity names to process
         update_existing (bool): Whether to update existing entity data
         max_workers (int): Maximum number of concurrent workers
@@ -75,6 +76,17 @@ def batch_process(input_file=None, entity_list=None, update_existing=True, max_w
                         entities.append(row[0].strip())
         except Exception as e:
             logger.error(f"Error reading CSV file: {str(e)}")
+            return (0, 0, [])
+    elif text_file:
+        # Read entities from text file (one per line)
+        try:
+            with open(text_file, 'r') as f:
+                for line in f:
+                    entity_name = line.strip()
+                    if entity_name:
+                        entities.append(entity_name)
+        except Exception as e:
+            logger.error(f"Error reading text file: {str(e)}")
             return (0, 0, [])
     elif entity_list:
         entities = entity_list
@@ -122,6 +134,7 @@ def main():
     """
     parser = argparse.ArgumentParser(description="Batch process healthcare entities")
     parser.add_argument("-f", "--file", help="Path to CSV file with entity names")
+    parser.add_argument("-t", "--text", help="Path to text file with newline-separated entity names")
     parser.add_argument("-e", "--entities", nargs="+", help="List of entity names to process")
     parser.add_argument("--no-update", action="store_true", help="Don't update existing entity data")
     parser.add_argument("-w", "--workers", type=int, default=4, help="Maximum number of concurrent workers")
@@ -129,12 +142,12 @@ def main():
     
     args = parser.parse_args()
     
-    if not args.file and not args.entities:
-        parser.error("Either --file or --entities must be provided")
+    if not args.file and not args.text and not args.entities:
+        parser.error("Either --file, --text, or --entities must be provided")
     
     # Process entities
     success_count, failure_count, failures = batch_process(
-        args.file, args.entities, not args.no_update, args.workers
+        args.file, args.text, args.entities, not args.no_update, args.workers
     )
     
     # Write results to output file if specified

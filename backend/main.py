@@ -12,10 +12,10 @@ import logging
 from dotenv import load_dotenv
 
 # Import modules
-from scraper.wikipedia import scrape_wikipedia, search_wikipedia
-from scraper.news import scrape_recent_news
-from enrichment.claude import enrich_entity_data, infer_relationships
-from utils.json_utils import save_entity_json, load_entity_json, validate_entity_json, merge_entity_data
+from backend.scraper.wikipedia import scrape_wikipedia, search_wikipedia
+from backend.scraper.news import scrape_recent_news
+from backend.enrichment.claude import enrich_entity_data, infer_relationships
+from backend.utils.json_utils import save_entity_json, load_entity_json, validate_entity_json, merge_entity_data
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -124,7 +124,7 @@ def infer_entity_relationships(directory="data/entities"):
     Returns:
         bool: True if successful, False otherwise
     """
-    from utils.json_utils import load_all_entities
+    from backend.utils.json_utils import load_all_entities
     
     logger.info("Inferring relationships between entities")
     
@@ -175,7 +175,7 @@ def main():
     
     # List all processed entities
     if args.list:
-        from utils.json_utils import load_all_entities
+        from backend.utils.json_utils import load_all_entities
         entities = load_all_entities()
         
         if not entities:
